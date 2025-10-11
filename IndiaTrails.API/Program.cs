@@ -1,5 +1,7 @@
+using FluentValidation.AspNetCore;
 using IndiaTrails.API.Data;
 using IndiaTrails.API.Mappings;
+using IndiaTrails.API.Models.Validators;
 using IndiaTrails.API.Repositories;
 using IndiaTrails.API.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<IndiaTrailsDBContext>(options =>
                                                         options.UseSqlServer(builder.Configuration.GetConnectionString("IndiaTrailsDBConnectionString"))
                                                    );
+
+builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddRegionRequestDtoValidator>());
 
 builder.Services.AddScoped<IRegionRepository,SqlServerRegionRepository>();
 
