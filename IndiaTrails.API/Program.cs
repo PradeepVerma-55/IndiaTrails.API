@@ -26,8 +26,10 @@ builder.Services.AddDbContext<IndiaTrailsDBContext>(options =>
 
 //Fluent Validation Configuration
 builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddRegionRequestDtoValidator>());
+builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddWalkRequestDtoValidator>());
 
-builder.Services.AddScoped<IRegionRepository,SqlServerRegionRepository>();
+builder.Services.AddScoped<IRegionRepository, SqlServerRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SqlServerWalkRepository>();
 
 var app = builder.Build();
 

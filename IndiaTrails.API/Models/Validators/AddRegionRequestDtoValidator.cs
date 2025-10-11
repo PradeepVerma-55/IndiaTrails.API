@@ -22,4 +22,21 @@ namespace IndiaTrails.API.Models.Validators
 
         }
     }
+
+    public class AddWalkRequestDtoValidator : AbstractValidator<AddWalkRequestDto>
+    {
+        public AddWalkRequestDtoValidator()
+        {
+            RuleFor(x => x.Name)
+                 .NotEmpty().WithMessage("Name is required.")
+                 .MaximumLength(100);
+
+            RuleFor(x => x.Description)
+                 .NotEmpty().WithMessage("Description is required.")
+                 .MaximumLength(1000);
+
+            RuleFor(x => x.LengthInKm)
+                 .GreaterThan(0).WithMessage("LengthInKm must be greater than zero.");
+        }
+    }
 }
