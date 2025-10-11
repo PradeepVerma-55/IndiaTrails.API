@@ -24,6 +24,7 @@ builder.Services.AddDbContext<IndiaTrailsDBContext>(options =>
                                                         options.UseSqlServer(builder.Configuration.GetConnectionString("IndiaTrailsDBConnectionString"))
                                                    );
 
+//Fluent Validation Configuration
 builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddRegionRequestDtoValidator>());
 
 builder.Services.AddScoped<IRegionRepository,SqlServerRegionRepository>();
