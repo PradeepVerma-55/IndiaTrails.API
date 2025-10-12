@@ -81,5 +81,3 @@ It provides endpoints for managing **Regions**, **Trails (Walks)**, and **Diffic
 * Add **pagination, filtering, and sorting** to trail listings.
 
 ---
-
-Would you like me to tailor this description for **Swagger’s `Info` section** (so it appears as a summary at the top of your Swagger UI)?
