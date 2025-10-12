@@ -20,9 +20,9 @@ namespace IndiaTrails.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks()
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
         {
-            var walks = await repository.GetAllAsync();
+            var walks = await repository.GetAllAsync(filterOn, filterQuery);
             if (walks == null || !walks.Any())
             {
                 return NotFound("No walks found!");
