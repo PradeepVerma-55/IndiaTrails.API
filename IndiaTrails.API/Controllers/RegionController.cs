@@ -3,6 +3,7 @@ using IndiaTrails.API.Models.Domain;
 using IndiaTrails.API.Models.DTOs.Request;
 using IndiaTrails.API.Models.DTOs.Response;
 using IndiaTrails.API.Repositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace IndiaTrails.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Protect all endpoints in this controller
     public class RegionController : ControllerBase
     {
         private readonly IRegionRepository _repository;
@@ -21,6 +23,7 @@ namespace IndiaTrails.API.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
+        [AllowAnonymous] // Allow public access to GET all regions
         public async Task<IActionResult> GetAllRegions()
         {
             var regions = await _repository.GetAllAsync();
@@ -35,6 +38,7 @@ namespace IndiaTrails.API.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [AllowAnonymous] // Allow public access to GET region by ID
         public async Task<IActionResult> GetRegionById(Guid id)
         {
             var region = await _repository.GetByIdAsync(id);
