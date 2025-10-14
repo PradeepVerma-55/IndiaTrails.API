@@ -6,6 +6,7 @@ using IndiaTrails.API.Repositories.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace IndiaTrails.API.Controllers
 {
@@ -16,21 +17,26 @@ namespace IndiaTrails.API.Controllers
     {
         private readonly IRegionRepository _repository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionController> logger;
 
-        public RegionController(IRegionRepository repository,IMapper mapper)
+        public RegionController(IRegionRepository repository,IMapper mapper, ILogger<RegionController> logger)
         {
             this._repository = repository;
             this.mapper = mapper;
+            this.logger = logger;
         }
         [HttpGet]
         [AllowAnonymous] // Allow public access to GET all regions
         public async Task<IActionResult> GetAllRegions()
         {
+            logger.LogInformation("Getting all regions");
             var regions = await _repository.GetAllAsync();
             if(regions == null)
             {
                 return NotFound("No region found!");
             }
+            logger.LogInformation($"Found {regions.Count} regions Data - {JsonSerializer.Serialize(regions)}");
+
             var regionsDto = mapper.Map<List<RegionResponseDto>>(regions);
             return Ok(regionsDto);
             

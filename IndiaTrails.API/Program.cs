@@ -8,8 +8,20 @@ using IndiaTrails.API.Repositories.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Serilog Configuration
+
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/IndiaTrailsAPI-.log", rollingInterval: RollingInterval.Day)
+    .MinimumLevel.Information()
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
 
