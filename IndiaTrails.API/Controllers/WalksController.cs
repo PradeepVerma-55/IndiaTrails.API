@@ -4,6 +4,7 @@ using IndiaTrails.API.Models.DTOs.Request;
 using IndiaTrails.API.Models.DTOs.Response;
 using IndiaTrails.API.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 namespace IndiaTrails.API.Controllers
 {
     [Route("api/[controller]")]
@@ -25,13 +26,21 @@ namespace IndiaTrails.API.Controllers
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            var walks = await repository.GetAllAsync(filterOn, filterQuery);
-            if (walks == null || !walks.Any())
+            try
             {
-                return NotFound("No walks found!");
+                var walks = await repository.GetAllAsync(filterOn, filterQuery);
+                if (walks == null || !walks.Any())
+                {
+                    return NotFound("No walks found!");
+                }
+                var walksDto = mapper.Map<List<WalkResponseDto>>(walks);
+                return Ok(walksDto);
             }
-            var walksDto = mapper.Map<List<WalkResponseDto>>(walks);
-            return Ok(walksDto);
+            catch (Exception)
+            {
+                //Log this excpetion
+                return Problem("An error occurred while processing your request.",null, (int)HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpGet]
