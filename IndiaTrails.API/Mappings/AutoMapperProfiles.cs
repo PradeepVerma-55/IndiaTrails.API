@@ -13,8 +13,8 @@ namespace IndiaTrails.API.Mappings
             CreateMap<Difficulty,DifficultyResponseDto>().ReverseMap();
             CreateMap<AddWalkRequestDto, Walk>().ReverseMap();
             CreateMap<UpdateWalkRequestDto, Walk>().ReverseMap();
-            CreateMap<Walk, WalkResponseDto>();
-
+            CreateMap<Walk, WalkResponseDtoV1>();
+            CreateMap<Walk, WalkResponseDtoV2>();
         }
     }
 }

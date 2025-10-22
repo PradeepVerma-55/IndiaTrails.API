@@ -5,16 +5,16 @@ using IndiaTrails.API.Models.DTOs.Response;
 using IndiaTrails.API.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-namespace IndiaTrails.API.Controllers
+namespace IndiaTrails.API.V1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WalksController : ControllerBase
+    public class MyWalksController : ControllerBase
     {
         private readonly IWalkRepository repository;
         private readonly IMapper mapper;
 
-        public WalksController(IWalkRepository repository,IMapper mapper)
+        public MyWalksController(IWalkRepository repository,IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
